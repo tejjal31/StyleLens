@@ -1,2 +1,6 @@
-opencv-python>=4.8
+
+fastapi
+uvicorn[standard]
+python-multipart
+opencv-python-headless>=4.8
 numpy>=1.24
