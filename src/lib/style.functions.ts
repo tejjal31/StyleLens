@@ -22,7 +22,13 @@ export const analyzeItem = createServerFn({ method: "POST" })
     const formData = new FormData();
     formData.append("file", blob, "wardrobe-image.jpg");
 
-    const cvResponse = await fetch("http://127.0.0.1:8000/analyze", {
+    const cvApiUrl = process.env.CV_API_URL?.replace(/\/+$/, "");
+
+    if (!cvApiUrl) {
+      throw new Error("CV_API_URL is not configured");
+    }
+
+    const cvResponse = await fetch(`${cvApiUrl}/analyze`, {
       method: "POST",
       body: formData,
     });
