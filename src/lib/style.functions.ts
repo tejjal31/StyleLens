@@ -22,7 +22,7 @@ export const analyzeItem = createServerFn({ method: "POST" })
     const formData = new FormData();
     formData.append("file", blob, "wardrobe-image.jpg");
 
-    const cvApiUrl = process.env.CV_API_URL?.replace(/\/+$/, "");
+    const cvApiUrl = process.env["CV_API_URL"]?.replace(/\/+$/, "");
 
     if (!cvApiUrl) {
       throw new Error("CV_API_URL is not configured");
@@ -34,7 +34,9 @@ export const analyzeItem = createServerFn({ method: "POST" })
     });
 
     if (!cvResponse.ok) {
-      throw new Error("Computer Vision analysis failed");
+      const errorText = await cvResponse.text();
+      console.error("CV ERROR:", cvResponse.status, errorText);
+      throw new Error(`CV Error ${cvResponse.status}: ${errorText}`);
     }
 
     const cvResult = await cvResponse.json();

@@ -8,7 +8,7 @@ Algorithms used:
 from __future__ import annotations
 
 import cv2
-import numpy as np
+import numpy as npn
 
 
 def dominant_colors(img: np.ndarray, mask: np.ndarray, k: int = 3) -> list[dict]:
